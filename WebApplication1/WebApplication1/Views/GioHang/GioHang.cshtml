@@ -1,0 +1,57 @@
+﻿@using WebApplication1.Models
+@model List<GioHang> 
+@{
+    ViewBag.Title = "GioHang";
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<h2>GioHang</h2>
+
+<table align="center" border="1">
+    <tr style="text-align:center; color:white">
+        <td>Ma sach </td>
+        <td width="400">Tenh sach </td>
+        <td>Anh bia </td>
+        <td width="10">So luong </td>
+        <td width="200">Don gia</td>
+        <td width="200">Thanh tien </td>
+        <td width="300"></td>
+        <td width="150"></td>
+        <td width="150"></td>
+
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr style="text-align:center;color:white">
+            <td>@item.iMasach</td>
+            <td>@item.sTensach</td>
+            <td><img src="~/img/@item.sAnhbia" /></td>
+            @using (Html.BeginForm("CapnhatGiohang", "Giohang", new { @iMaSp = item.iMasach }))
+            {
+                <td>
+                    <input type="number"  name="txtSoluong" value="@item.iSoluong" style="background-color:white; width:50px;" />
+                </td>
+                <td >@String.Format("{0:0,0}", item.dDonggia)</td>
+                <td>@String.Format("{0:0,0}", item.dThanhtien)</td>
+                <td> <a href="@Url.Action("Details","BookStore",new { id = item.iMasach })">Chi tiết</a></td>
+                <td>@Html.ActionLink("Xóa", "XoaGiohang", new { @iMaSp = item.iMasach })</td>
+                <td><input type="submit" value="Cập nhật" /></td>
+            }
+
+
+        </tr>
+    }
+    <tr style="text-align:right; color:red">
+        <td colspan="4" style="color:white">Số lượng sách: @ViewBag.Tongsoluong</td>
+        <td colspan="5" style="color:white">Tổng tiền: @string.Format("{0:0,0}", ViewBag.Tongtien) VNÐ</td>
+    </tr>
+    <tr style="color:blue; text-align:right">
+        <td colspan="9">@Html.ActionLink("Xóa Giỏ hàng", "XoaTatcaGiohang")</td>
+    </tr>
+
+    <tr style="color:blue; text-align:right">
+        <td colspan="9">@Html.ActionLink("Đặt hàng", "DatHang","GioHang")</td>
+    </tr>
+</table>
+
